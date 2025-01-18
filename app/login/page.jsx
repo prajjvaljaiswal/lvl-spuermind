@@ -3,7 +3,6 @@ import React from "react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-const BaseApiUrl = "https://istd-api.vercel.app/api";
 const LoginPage = () => {
     const router = useRouter();
 
@@ -14,20 +13,6 @@ const LoginPage = () => {
   const onSignupSuccess = async (res) => {
     console.log(res.email);
     console.log(res.name);
-
-    const response = await fetch(`${BaseApiUrl}/user/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username: res.name, email: res.email }),
-    });
-    const json = await response.json();
-
-    if (json) {
-      localStorage.setItem("token", json.authToken);
-      router.push("/dashboard");
-    }
   };
 
   const onSignupFailure = () => {
